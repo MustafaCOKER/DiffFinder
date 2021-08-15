@@ -1,6 +1,6 @@
 # DiffFinder
 
-TO Build:
+To Build:
 
 $ mkdir build && cd build
 $ cmake ..
