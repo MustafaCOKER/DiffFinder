@@ -32,4 +32,4 @@
 *.app
 
 #generated folders
-./build/*
+build/*
