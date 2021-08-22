@@ -12,7 +12,7 @@
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="b_start">
             <property name="label" translatable="yes">Start Diff Finder</property>
             <property name="width-request">350</property>
             <property name="height-request">30</property>

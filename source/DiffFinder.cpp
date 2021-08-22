@@ -33,13 +33,13 @@ Result DiffFinder::isDifferent(const char * const path, double threshold)
     if (reference.empty())
     {
         std::cerr << "Reference Image is Empty, Exciting !\n";
-        exit(-1);
+        return Result::Image_CanNOT_Load;
     }
 
     if (another.empty())
     {
         std::cerr << "Another Image is Empty, Exciting !\n";
-        exit(-1);
+        return Result::Image_CanNOT_Load;
     }
 
     cv::Mat paintedBackgroundReference,

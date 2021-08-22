@@ -60,17 +60,47 @@ static void destroy(GtkWidget *widget, gpointer *data)
     gtk_main_quit();
 }
 
+static void run_diffFinder(GtkWidget *widget, gpointer *data)
+{
+    DiffFinder *finderInstance = DiffFinder::getInstance();
+    
+    finderInstance->setReference(referenceFileName);
+    Result res = finderInstance->isDifferent(anotherFileName, 0.048);
+
+    switch(res)
+    {
+    case Result::Image_CanNOT_Load:
+        std::cout << "Images are Different\n";
+        break;
+    case Result::Different:
+        std::cout << "Images are Different\n";
+        break;
+    case Result::Same:
+        std::cout << "Images are Different\n";
+        break;
+    default:
+        std::cerr << "Unknown Situation, Exiting !\n";
+        exit(-1); 
+    }
+
+    DiffFinder::deleteInstance();
+}
+
 int main(int argc, char **argv)
 {
-    GtkBuilder      *builder; 
-    GtkWidget       *window;
-    GError          *err = nullptr; 
+    GtkBuilder  *builder    = nullptr; 
+    GtkWidget   *window     = nullptr;
+    GError      *err        = nullptr; 
 
+    // file browsers
     GtkWidget   *fb_ref = nullptr,
                 *fb_ano = nullptr;
 
-    GtkWidget *b_exit = nullptr;
+    // buttons
+    GtkWidget   *b_exit = nullptr,
+                *b_start = nullptr;
 
+    // textviews
     GtkWidget   *referencePath = nullptr,
                 *anotherPath = nullptr;
 
@@ -127,6 +157,13 @@ int main(int argc, char **argv)
         exit(-1);
     }
 
+    b_start = GTK_WIDGET( gtk_builder_get_object(builder, "b_start"));
+    if (b_start == nullptr)
+    {
+        std::cout << "b_start is nullptr\n";
+        exit(-1);
+    }
+
     referencePath = GTK_WIDGET( gtk_builder_get_object(builder, "tv_reference"));
     if (referencePath == nullptr)
     {
@@ -160,6 +197,7 @@ int main(int argc, char **argv)
     g_signal_connect(G_OBJECT(fb_ano), "selection-changed", G_CALLBACK(getAnotherFileName), nullptr);
 
     g_signal_connect(G_OBJECT(b_exit), "clicked", G_CALLBACK(destroy), nullptr);
+    g_signal_connect(G_OBJECT(b_start), "clicked", G_CALLBACK(run_diffFinder), nullptr);
 
     gtk_builder_connect_signals (builder, nullptr);
     g_object_unref(G_OBJECT (builder));

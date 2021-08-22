@@ -5,7 +5,8 @@
 
 enum class Result {
     Same = 0,
-    Different
+    Different,
+    Image_CanNOT_Load
 };
 
 class DiffFinder {
