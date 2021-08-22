@@ -18,6 +18,8 @@ public:
     Result  isDifferent(const char * const path, double threshold);
     Result  setReference(const char * const path);
 
+    Result chechFileFormat(const char * const path);
+
     void sayHi() { std::cout << "glad to see you use difference finder app\n"; }
 
 private:

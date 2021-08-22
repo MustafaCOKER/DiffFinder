@@ -8,6 +8,9 @@
 char *referenceFileName = nullptr,
      *anotherFileName = nullptr;
 
+const char *DEFAULT_VAL_FOR_REFERENCE_FILE_TV = "/Path/Reference/File/..";
+const char *DEFAULT_VAL_FOR_ANOTHER_FILE_TV = "/Path/Another/File/..";
+
 GtkTextBuffer *referencePathBuffer = nullptr;
 GtkTextIter iterForRef;
 
@@ -59,9 +62,19 @@ static void getReferenceFileName(GtkFileChooser *file_chooser, gpointer data)
 
     gtk_text_buffer_get_iter_at_offset(referencePathBuffer, &iterForRef, 0);
     gtk_text_buffer_create_tag(referencePathBuffer, "lmarg", "left_margin", 1, NULL);
-    gtk_text_buffer_create_tag(referencePathBuffer, "green_bg", "background", "green", NULL);
+    Result res = finderInstance->setReference(referenceFileName);
+    
+    if (res == Result::Image_CanNOT_Load)
+    {
+        show_warning("Reference Image Could NOT Loaded Succesful, Please Check the Paths");
+        gtk_text_buffer_create_tag(referencePathBuffer, "red_bg", "background", "red", NULL);
+        gtk_text_buffer_insert_with_tags_by_name(referencePathBuffer, &iterForRef, DEFAULT_VAL_FOR_REFERENCE_FILE_TV, -1, "lmarg", "red_bg", NULL);
 
-    gtk_text_buffer_insert_with_tags_by_name(referencePathBuffer, &iterForRef, referenceFileName, -1, "lmarg", "green_bg", NULL);
+    } else {
+        gtk_text_buffer_create_tag(referencePathBuffer, "green_bg", "background", "green", NULL);
+        gtk_text_buffer_insert_with_tags_by_name(referencePathBuffer, &iterForRef, referenceFileName, -1, "lmarg", "green_bg", NULL);
+    }
+
 }
 
 static void getAnotherFileName(GtkFileChooser *file_chooser, gpointer data)
@@ -80,7 +93,17 @@ static void getAnotherFileName(GtkFileChooser *file_chooser, gpointer data)
     gtk_text_buffer_create_tag(anotherPathBuffer, "lmarg", "left_margin", 1, NULL);
     gtk_text_buffer_create_tag(anotherPathBuffer, "green_bg", "background", "green", NULL);
 
-    gtk_text_buffer_insert_with_tags_by_name(anotherPathBuffer, &iterForAno, anotherFileName, -1, "lmarg", "green_bg", NULL);
+    Result res = finderInstance->chechFileFormat(anotherFileName);
+
+    if (res == Result::Image_CanNOT_Load)
+    {
+        show_warning("Another Image Could NOT Loaded Succesful, Please Check the Paths");
+        gtk_text_buffer_create_tag(anotherPathBuffer, "red_bg", "background", "red", NULL);
+        gtk_text_buffer_insert_with_tags_by_name(anotherPathBuffer, &iterForAno, DEFAULT_VAL_FOR_ANOTHER_FILE_TV, -1, "lmarg", "red_bg", NULL);
+    } else {
+        gtk_text_buffer_create_tag(anotherPathBuffer, "green_bg", "background", "green", NULL);
+        gtk_text_buffer_insert_with_tags_by_name(anotherPathBuffer, &iterForAno, anotherFileName, -1, "lmarg", "green_bg", NULL);
+    }
 }
 
 static void destroy(GtkWidget *widget, gpointer *data)
@@ -95,15 +118,7 @@ static void destroy(GtkWidget *widget, gpointer *data)
 
 static void run_diffFinder(GtkWidget *widget, gpointer *data)
 {
-    Result res = finderInstance->setReference(referenceFileName);
-    
-    if (res == Result::Image_CanNOT_Load)
-    {
-        show_warning("Reference Image Could NOT Loaded Succesful, Please Check the Paths");
-        return;
-    }
-    
-    res = finderInstance->isDifferent(anotherFileName, 0.048);
+    Result res = finderInstance->isDifferent(anotherFileName, 0.048);
 
     switch(res)
     {
@@ -225,8 +240,8 @@ int main(int argc, char **argv)
     gtk_text_buffer_create_tag(referencePathBuffer, "red_bg", "background", "red", NULL);
     gtk_text_buffer_create_tag(anotherPathBuffer,   "red_bg", "background", "red", NULL);
 
-    gtk_text_buffer_insert_with_tags_by_name(referencePathBuffer, &iterForRef, "/Path/Reference/File/..", -1, "lmarg", "red_bg", NULL);
-    gtk_text_buffer_insert_with_tags_by_name(anotherPathBuffer, &iterForAno, "/Path/Another/File/..", -1, "lmarg", "red_bg", NULL);
+    gtk_text_buffer_insert_with_tags_by_name(referencePathBuffer, &iterForRef, DEFAULT_VAL_FOR_REFERENCE_FILE_TV, -1, "lmarg", "red_bg", NULL);
+    gtk_text_buffer_insert_with_tags_by_name(anotherPathBuffer, &iterForAno, DEFAULT_VAL_FOR_ANOTHER_FILE_TV, -1, "lmarg", "red_bg", NULL);
 
     g_signal_connect(G_OBJECT(fb_ref), "selection-changed", G_CALLBACK(getReferenceFileName), nullptr);
     g_signal_connect(G_OBJECT(fb_ano), "selection-changed", G_CALLBACK(getAnotherFileName), nullptr);

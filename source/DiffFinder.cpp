@@ -80,8 +80,24 @@ Result DiffFinder::setReference(const char * const path)
     if (reference.empty())
     {
         std::cerr << "Reference Image Path Invalid, Exiting !\n";
-        exit(1);
+        return Result::Image_CanNOT_Load;
     }
+
+    return Result::Init;
+}
+
+Result DiffFinder::chechFileFormat(const char * const path)
+{
+    cv::Mat im = cv::imread(path, cv::IMREAD_UNCHANGED);
+    
+    if (im.empty())
+    {
+        std::cerr << "Another Image Path Invalid, Exiting !\n";
+        return Result::Image_CanNOT_Load;
+    }
+
+    return Result::Init;
+
 }
 
 int DiffFinder::applyThreshold2Diff(cv::Mat& mask, cv::Point p)
