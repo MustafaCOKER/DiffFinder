@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <gtk/gtk.h>
 
 // our custom headers
@@ -23,9 +24,13 @@ static void getReferenceFileName(GtkFileChooser *file_chooser, gpointer data)
     preview = GTK_WIDGET (data);
     referenceFileName = gtk_file_chooser_get_preview_filename (file_chooser);
 
-    gtk_text_buffer_insert(referencePathBuffer, &iterForRef, referenceFileName, -1);
-    
-    std::cout << referenceFileName << std::endl;
+    gtk_text_buffer_set_text(referencePathBuffer, "", 0);
+
+    gtk_text_buffer_get_iter_at_offset(referencePathBuffer, &iterForRef, 0);
+    gtk_text_buffer_create_tag(referencePathBuffer, "lmarg", "left_margin", 1, NULL);
+    gtk_text_buffer_create_tag(referencePathBuffer, "green_bg", "background", "green", NULL);
+
+    gtk_text_buffer_insert_with_tags_by_name(referencePathBuffer, &iterForRef, referenceFileName, -1, "lmarg", "green_bg", NULL);
 }
 
 static void getAnotherFileName(GtkFileChooser *file_chooser, gpointer data)
@@ -38,8 +43,13 @@ static void getAnotherFileName(GtkFileChooser *file_chooser, gpointer data)
     preview = GTK_WIDGET (data);
     anotherFileName = gtk_file_chooser_get_preview_filename (file_chooser);
 
-    gtk_text_buffer_insert(anotherPathBuffer, &iterForAno, anotherFileName, -1);
-    std::cout << anotherFileName << std::endl;
+    gtk_text_buffer_set_text(anotherPathBuffer, "", 0);
+
+    gtk_text_buffer_get_iter_at_offset(anotherPathBuffer, &iterForAno, 0);
+    gtk_text_buffer_create_tag(anotherPathBuffer, "lmarg", "left_margin", 1, NULL);
+    gtk_text_buffer_create_tag(anotherPathBuffer, "green_bg", "background", "green", NULL);
+
+    gtk_text_buffer_insert_with_tags_by_name(anotherPathBuffer, &iterForAno, anotherFileName, -1, "lmarg", "green_bg", NULL);
 }
 
 static void destroy(GtkWidget *widget, gpointer *data)
