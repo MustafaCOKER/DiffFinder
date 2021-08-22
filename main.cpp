@@ -1,4 +1,7 @@
 #include <iostream>
+#include <gtk/gtk.h>
+
+// our custom headers
 #include "DiffFinder.hpp"
 
 void printUsage()
