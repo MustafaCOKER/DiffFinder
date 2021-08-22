@@ -52,7 +52,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton">
+          <object class="GtkButton" id="b_exit">
             <property name="label" translatable="yes">EXIT</property>
             <property name="width-request">150</property>
             <property name="height-request">30</property>
@@ -66,12 +66,19 @@
           </packing>
         </child>
         <child>
-          <object class="GtkTextView">
+          <object class="GtkTextView" id="tv_reference">
             <property name="width-request">250</property>
             <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="tooltip-text" translatable="yes">Path to Reference Image</property>
+            <property name="hscroll-policy">natural</property>
+            <property name="vscroll-policy">natural</property>
+            <property name="editable">False</property>
+            <property name="wrap-mode">char</property>
+            <property name="overwrite">True</property>
+            <property name="accepts-tab">False</property>
+            <property name="input-purpose">url</property>
             <property name="input-hints">GTK_INPUT_HINT_SPELLCHECK | GTK_INPUT_HINT_NO_EMOJI | GTK_INPUT_HINT_NONE</property>
             <property name="monospace">True</property>
           </object>
@@ -81,11 +88,20 @@
           </packing>
         </child>
         <child>
-          <object class="GtkTextView">
+          <object class="GtkTextView" id="tv_another">
             <property name="width-request">250</property>
             <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
+            <property name="hscroll-policy">natural</property>
+            <property name="vscroll-policy">natural</property>
+            <property name="editable">False</property>
+            <property name="wrap-mode">char</property>
+            <property name="overwrite">True</property>
+            <property name="accepts-tab">False</property>
+            <property name="input-purpose">url</property>
+            <property name="input-hints">GTK_INPUT_HINT_SPELLCHECK | GTK_INPUT_HINT_NO_EMOJI | GTK_INPUT_HINT_NONE</property>
+            <property name="monospace">True</property>
           </object>
           <packing>
             <property name="x">375</property>
