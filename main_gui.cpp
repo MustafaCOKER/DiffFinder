@@ -118,7 +118,7 @@ static void destroy(GtkWidget *widget, gpointer *data)
 
 static void run_diffFinder(GtkWidget *widget, gpointer *data)
 {
-    Result res = finderInstance->isDifferent(anotherFileName, 0.048);
+    Result res = finderInstance->isDifferent(nullptr, 0.048);
 
     switch(res)
     {

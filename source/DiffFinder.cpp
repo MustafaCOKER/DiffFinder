@@ -3,8 +3,9 @@
 
 #include "DiffFinder.hpp"
 
-cv::Mat DiffFinder::reference = cv::Mat();
-DiffFinder *DiffFinder::instance = nullptr;
+cv::Mat DiffFinder::reference       = cv::Mat();
+cv::Mat DiffFinder::another         = cv::Mat();
+DiffFinder *DiffFinder::instance    = nullptr;
 
 DiffFinder *DiffFinder::getInstance(void)
 {
@@ -28,7 +29,12 @@ void DiffFinder::deleteInstance(void)
 
 Result DiffFinder::isDifferent(const char * const path, double threshold)
 {
-    cv::Mat another = cv::imread(path, cv::IMREAD_UNCHANGED);
+    if (path != nullptr)
+    {
+        std::cout << "Here1\n";
+        if (this->setAnother(path) == Result::Image_CanNOT_Load)
+            return Result::Image_CanNOT_Load;
+    }
 
     if (reference.empty())
     {
@@ -88,16 +94,15 @@ Result DiffFinder::setReference(const char * const path)
 
 Result DiffFinder::setAnother(const char * const path)
 {
-    cv::Mat im = cv::imread(path, cv::IMREAD_UNCHANGED);
+    another = cv::imread(path, cv::IMREAD_UNCHANGED);
     
-    if (im.empty())
+    if (another.empty())
     {
         std::cerr << "Another Image Path Invalid, Exiting !\n";
         return Result::Image_CanNOT_Load;
     }
 
     return Result::Init;
-
 }
 
 int DiffFinder::applyThreshold2Diff(cv::Mat& mask, cv::Point p)
