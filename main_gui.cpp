@@ -93,7 +93,7 @@ static void getAnotherFileName(GtkFileChooser *file_chooser, gpointer data)
     gtk_text_buffer_create_tag(anotherPathBuffer, "lmarg", "left_margin", 1, NULL);
     gtk_text_buffer_create_tag(anotherPathBuffer, "green_bg", "background", "green", NULL);
 
-    Result res = finderInstance->chechFileFormat(anotherFileName);
+    Result res = finderInstance->setAnother(anotherFileName);
 
     if (res == Result::Image_CanNOT_Load)
     {

@@ -86,7 +86,7 @@ Result DiffFinder::setReference(const char * const path)
     return Result::Init;
 }
 
-Result DiffFinder::chechFileFormat(const char * const path)
+Result DiffFinder::setAnother(const char * const path)
 {
     cv::Mat im = cv::imread(path, cv::IMREAD_UNCHANGED);
     
