@@ -137,7 +137,7 @@ static void run_diffFinder(GtkWidget *widget, gpointer *data)
     }
 }
 
-int main(int argc, char **argv)
+int main()
 {
     GtkBuilder  *builder    = nullptr; 
     GError      *err        = nullptr; 
