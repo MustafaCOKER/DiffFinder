@@ -2,6 +2,8 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkFileFilter" id="filefilter1"/>
+  <object class="GtkFileFilter" id="filefilter2"/>
   <object class="GtkApplicationWindow" id="window1">
     <property name="name">window1</property>
     <property name="can-focus">False</property>
@@ -10,35 +12,9 @@
         <property name="visible">True</property>
         <property name="can-focus">False</property>
         <child>
-          <object class="GtkImage" id="ReferenceImage">
-            <property name="width-request">500</property>
-            <property name="height-request">250</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="stock">gtk-missing-image</property>
-          </object>
-          <packing>
-            <property name="x">10</property>
-            <property name="y">10</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage" id="AnotherImage">
-            <property name="width-request">500</property>
-            <property name="height-request">250</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="stock">gtk-missing-image</property>
-          </object>
-          <packing>
-            <property name="x">555</property>
-            <property name="y">10</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkButton">
             <property name="label" translatable="yes">Start Diff Finder</property>
-            <property name="width-request">150</property>
+            <property name="width-request">350</property>
             <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
@@ -47,31 +23,30 @@
             <property name="relief">half</property>
           </object>
           <packing>
-            <property name="x">750</property>
-            <property name="y">321</property>
+            <property name="x">15</property>
+            <property name="y">120</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="b_exit">
             <property name="label" translatable="yes">EXIT</property>
-            <property name="width-request">150</property>
+            <property name="width-request">180</property>
             <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
           </object>
           <packing>
-            <property name="x">905</property>
-            <property name="y">321</property>
+            <property name="x">390</property>
+            <property name="y">120</property>
           </packing>
         </child>
         <child>
           <object class="GtkTextView" id="tv_reference">
-            <property name="width-request">250</property>
+            <property name="width-request">350</property>
             <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
-            <property name="tooltip-text" translatable="yes">Path to Reference Image</property>
             <property name="hscroll-policy">natural</property>
             <property name="vscroll-policy">natural</property>
             <property name="editable">False</property>
@@ -84,12 +59,12 @@
           </object>
           <packing>
             <property name="x">15</property>
-            <property name="y">321</property>
+            <property name="y">20</property>
           </packing>
         </child>
         <child>
           <object class="GtkTextView" id="tv_another">
-            <property name="width-request">250</property>
+            <property name="width-request">350</property>
             <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
@@ -104,34 +79,36 @@
             <property name="monospace">True</property>
           </object>
           <packing>
-            <property name="x">375</property>
-            <property name="y">321</property>
+            <property name="x">15</property>
+            <property name="y">60</property>
           </packing>
         </child>
         <child>
           <object class="GtkFileChooserButton" id="referenceFileChooser">
-            <property name="width-request">80</property>
+            <property name="name">FileBrowser</property>
+            <property name="width-request">180</property>
             <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="title" translatable="yes"/>
+            <property name="tooltip-text" translatable="yes">FileBrowser</property>
+            <property name="title" translatable="yes">Reference Choose</property>
           </object>
           <packing>
-            <property name="x">279</property>
-            <property name="y">321</property>
+            <property name="x">390</property>
+            <property name="y">20</property>
           </packing>
         </child>
         <child>
           <object class="GtkFileChooserButton" id="anotherFileChooser">
-            <property name="width-request">80</property>
+            <property name="width-request">180</property>
             <property name="height-request">30</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="title" translatable="yes"/>
           </object>
           <packing>
-            <property name="x">640</property>
-            <property name="y">321</property>
+            <property name="x">390</property>
+            <property name="y">60</property>
           </packing>
         </child>
       </object>
