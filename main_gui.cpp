@@ -14,6 +14,37 @@ GtkTextIter iterForRef;
 GtkTextBuffer *anotherPathBuffer = nullptr;
 GtkTextIter iterForAno;
 
+GtkWidget   *window     = nullptr;
+DiffFinder *finderInstance = nullptr;
+
+void show_warning(const char * const message)
+{
+    
+  GtkWidget *dialog;
+  dialog = gtk_message_dialog_new(GTK_WINDOW(window),
+            GTK_DIALOG_DESTROY_WITH_PARENT,
+            GTK_MESSAGE_WARNING,
+            GTK_BUTTONS_OK,
+            message);
+  gtk_window_set_title(GTK_WINDOW(dialog), "Warning");
+  gtk_dialog_run(GTK_DIALOG(dialog));
+  gtk_widget_destroy(dialog);
+}
+
+void show_info(const char * const message)
+{
+    
+  GtkWidget *dialog;
+  dialog = gtk_message_dialog_new(GTK_WINDOW(window),
+            GTK_DIALOG_DESTROY_WITH_PARENT,
+            GTK_MESSAGE_INFO,
+            GTK_BUTTONS_OK,
+            message);
+  gtk_window_set_title(GTK_WINDOW(dialog), "Information");
+  gtk_dialog_run(GTK_DIALOG(dialog));
+  gtk_widget_destroy(dialog);
+}
+
 static void getReferenceFileName(GtkFileChooser *file_chooser, gpointer data)
 {
     GtkWidget *preview;
@@ -54,6 +85,8 @@ static void getAnotherFileName(GtkFileChooser *file_chooser, gpointer data)
 
 static void destroy(GtkWidget *widget, gpointer *data)
 {
+    DiffFinder::deleteInstance();
+
     g_free (referenceFileName);
     g_free (anotherFileName);
 
@@ -62,34 +95,36 @@ static void destroy(GtkWidget *widget, gpointer *data)
 
 static void run_diffFinder(GtkWidget *widget, gpointer *data)
 {
-    DiffFinder *finderInstance = DiffFinder::getInstance();
+    Result res = finderInstance->setReference(referenceFileName);
     
-    finderInstance->setReference(referenceFileName);
-    Result res = finderInstance->isDifferent(anotherFileName, 0.048);
+    if (res == Result::Image_CanNOT_Load)
+    {
+        show_warning("Reference Image Could NOT Loaded Succesful, Please Check the Paths");
+        return;
+    }
+    
+    res = finderInstance->isDifferent(anotherFileName, 0.048);
 
     switch(res)
     {
     case Result::Image_CanNOT_Load:
-        std::cout << "Images are Different\n";
+        show_warning("Images Could NOT Loaded Succesful, Please Check the Paths");
         break;
     case Result::Different:
-        std::cout << "Images are Different\n";
+        show_info("Images Are Different");
         break;
     case Result::Same:
-        std::cout << "Images are Different\n";
+        show_info("Images Are Almost Same");
         break;
     default:
         std::cerr << "Unknown Situation, Exiting !\n";
         exit(-1); 
     }
-
-    DiffFinder::deleteInstance();
 }
 
 int main(int argc, char **argv)
 {
     GtkBuilder  *builder    = nullptr; 
-    GtkWidget   *window     = nullptr;
     GError      *err        = nullptr; 
 
     // file browsers
@@ -201,6 +236,8 @@ int main(int argc, char **argv)
 
     gtk_builder_connect_signals (builder, nullptr);
     g_object_unref(G_OBJECT (builder));
+
+    finderInstance = DiffFinder::getInstance();
 
     gtk_widget_show(window);               
     gtk_main();

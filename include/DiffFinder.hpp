@@ -4,7 +4,8 @@
 #include <opencv2/imgproc.hpp> 
 
 enum class Result {
-    Same = 0,
+    Init = 0, 
+    Same,
     Different,
     Image_CanNOT_Load
 };
@@ -15,7 +16,7 @@ public:
     static void         deleteInstance(void);
 
     Result  isDifferent(const char * const path, double threshold);
-    void    setReference(const char * const path);
+    Result  setReference(const char * const path);
 
     void sayHi() { std::cout << "glad to see you use difference finder app\n"; }
 

@@ -73,7 +73,7 @@ Result DiffFinder::isDifferent(const char * const path, double threshold)
     return maxDiffRatio > threshold ? Result::Different : Result::Same;
 }
 
-void DiffFinder::setReference(const char * const path)
+Result DiffFinder::setReference(const char * const path)
 {
     reference = cv::imread(path, cv::IMREAD_UNCHANGED);
 
