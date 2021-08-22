@@ -132,13 +132,19 @@ int main(int argc, char **argv)
     }
 
     referencePathBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(referencePath));
+    anotherPathBuffer   = gtk_text_view_get_buffer(GTK_TEXT_VIEW(anotherPath));
+    
     gtk_text_buffer_get_iter_at_offset(referencePathBuffer, &iterForRef, 0);
-
-    anotherPathBuffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(anotherPath));
     gtk_text_buffer_get_iter_at_offset(anotherPathBuffer, &iterForAno, 0);
     
-    gtk_text_buffer_insert(referencePathBuffer, &iterForRef, "/Path/Reference/File/..", -1);
-    gtk_text_buffer_insert(anotherPathBuffer, &iterForAno, "/Path/Another/File/..", -1);
+    gtk_text_buffer_create_tag(referencePathBuffer, "lmarg", "left_margin", 1, NULL);
+    gtk_text_buffer_create_tag(anotherPathBuffer,   "lmarg", "left_margin", 1, NULL);
+
+    gtk_text_buffer_create_tag(referencePathBuffer, "red_bg", "background", "red", NULL);
+    gtk_text_buffer_create_tag(anotherPathBuffer,   "red_bg", "background", "red", NULL);
+
+    gtk_text_buffer_insert_with_tags_by_name(referencePathBuffer, &iterForRef, "/Path/Reference/File/..", -1, "lmarg", "red_bg", NULL);
+    gtk_text_buffer_insert_with_tags_by_name(anotherPathBuffer, &iterForAno, "/Path/Another/File/..", -1, "lmarg", "red_bg", NULL);
 
     g_signal_connect(G_OBJECT(fb_ref), "selection-changed", G_CALLBACK(getReferenceFileName), nullptr);
     g_signal_connect(G_OBJECT(fb_ano), "selection-changed", G_CALLBACK(getAnotherFileName), nullptr);
