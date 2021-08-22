@@ -6,6 +6,8 @@ find_package( OpenCV    REQUIRED )
 
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 
+add_compile_options( -rdynamic )
+
 # find diffFinder implementation
 add_subdirectory(source)
 set(DIFF_FINDER_LIB DiffFinderImlp)
