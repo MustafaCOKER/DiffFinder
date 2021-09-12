@@ -12,5 +12,5 @@ enum class Result {
 class DiffFinderAlgorithmBase
 {
 public:
-    virtual Result execute(const cv::Mat& reference, const cv::Mat& another) = 0;
+    virtual Result execute(const cv::Mat& reference, const cv::Mat& another, double threshold) = 0;
 };
