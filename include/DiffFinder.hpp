@@ -26,10 +26,12 @@ private:
     ~DiffFinder() = default;
 
     // private functions
-    void    paintBackground(const cv::Mat& source, cv::Mat& painted);
-    double  diffImage(const cv::Mat& another, const cv::Mat& im2, cv::Mat& mask);
-    double  findMaxBlobRatio(const cv::Mat& mask);
-    int     applyThreshold2Diff(cv::Mat& mask, cv::Point p);
+    void    paintBackground(const cv::Mat& source, cv::Mat& painted) const;
+    double  diffImage(const cv::Mat& another, const cv::Mat& im2, cv::Mat& mask) const;
+    double  findMaxBlobRatio(const cv::Mat& mask) const;
+    int     applyThreshold2Diff(cv::Mat& mask, cv::Point p) const;
+
+    Result applyDiffFinderAlg1() const;
 
     // private class member data
     static cv::Mat      reference;

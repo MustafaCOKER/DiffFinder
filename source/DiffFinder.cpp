@@ -104,7 +104,7 @@ Result DiffFinder::setAnother(const char * const path)
     return Result::Init;
 }
 
-int DiffFinder::applyThreshold2Diff(cv::Mat& mask, cv::Point p)
+int DiffFinder::applyThreshold2Diff(cv::Mat& mask, cv::Point p) const
 {
     cv::Mat temp = mask.clone();
     std::vector<cv::Point> pts;
@@ -164,7 +164,7 @@ int DiffFinder::applyThreshold2Diff(cv::Mat& mask, cv::Point p)
     return count;
 }
 
-double DiffFinder::findMaxBlobRatio(const cv::Mat& mask)
+double DiffFinder::findMaxBlobRatio(const cv::Mat& mask) const
 {
     int maxDiffSize =0,
         tempSize =0;
@@ -191,7 +191,7 @@ double DiffFinder::findMaxBlobRatio(const cv::Mat& mask)
     return (double) maxDiffSize / (double) imSize;
 }
 
-double DiffFinder::diffImage(const cv::Mat& im1, const cv::Mat& im2, cv::Mat& mask)
+double DiffFinder::diffImage(const cv::Mat& im1, const cv::Mat& im2, cv::Mat& mask) const
 {
     cv::Mat diff;
     absdiff(im1, im2, diff);
@@ -220,7 +220,7 @@ double DiffFinder::diffImage(const cv::Mat& im1, const cv::Mat& im2, cv::Mat& ma
     return (double) sizeOfDiffPixels / (double) (diff.rows*diff.cols);
 }
 
-void DiffFinder::paintBackground(const cv::Mat& source, cv::Mat& painted)
+void DiffFinder::paintBackground(const cv::Mat& source, cv::Mat& painted) const
 {
     if (source.empty())
     {
@@ -236,4 +236,9 @@ void DiffFinder::paintBackground(const cv::Mat& source, cv::Mat& painted)
     pngChannels[2].setTo(cv::Scalar(255), pngChannels[3]==0);
 
     cv::merge(pngChannels, painted);
+}
+
+Result DiffFinder::applyDiffFinderAlg1() const
+{
+    return Result::Init;
 }
