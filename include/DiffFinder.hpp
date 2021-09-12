@@ -3,12 +3,7 @@
 #include <iostream>
 #include <opencv2/imgproc.hpp> 
 
-enum class Result {
-    Init = 0, 
-    Same,
-    Different,
-    Image_CanNOT_Load
-};
+#include "DiffFinderAlgorithmBase.hpp"
 
 class DiffFinder {
 public:
@@ -27,12 +22,10 @@ private:
 
     // private functions
     void    paintBackground(const cv::Mat& source, cv::Mat& painted) const;
-    double  diffImage(const cv::Mat& another, const cv::Mat& im2, cv::Mat& mask) const;
+    double  diffImage(const cv::Mat& im1, const cv::Mat& im2, cv::Mat& mask) const;
     double  findMaxBlobRatio(const cv::Mat& mask) const;
     int     applyThreshold2Diff(cv::Mat& mask, cv::Point p) const;
-
-    Result applyDiffFinderAlg1() const;
-
+    
     // private class member data
     static cv::Mat      reference;
     static cv::Mat      another;

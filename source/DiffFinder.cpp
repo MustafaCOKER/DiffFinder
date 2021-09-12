@@ -237,8 +237,3 @@ void DiffFinder::paintBackground(const cv::Mat& source, cv::Mat& painted) const
 
     cv::merge(pngChannels, painted);
 }
-
-Result DiffFinder::applyDiffFinderAlg1() const
-{
-    return Result::Init;
-}
