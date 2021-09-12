@@ -3,6 +3,7 @@
 
 #include "DiffFinder.hpp"
 #include "DiffFinderAlgorithm1.hpp"
+#include "DiffFinderAlgorithm2.hpp"
 
 cv::Mat DiffFinder::reference = cv::Mat();
 cv::Mat DiffFinder::another = cv::Mat();
@@ -64,7 +65,7 @@ Result DiffFinder::isDifferent(const char *const path, double threshold)
 
     std::cout << "Both Images Loaded Succesfull\n";
 
-    return applyAlgorithm(DiffFinderAlgorithm1(), threshold);
+    return applyAlgorithm(DiffFinderAlgorithm2(), threshold);
 }
 
 Result DiffFinder::setReference(const char *const path)
