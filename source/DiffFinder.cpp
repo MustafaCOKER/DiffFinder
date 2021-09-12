@@ -31,7 +31,6 @@ Result DiffFinder::isDifferent(const char * const path, double threshold)
 {
     if (path != nullptr)
     {
-        std::cout << "Here1\n";
         if (this->setAnother(path) == Result::Image_CanNOT_Load)
             return Result::Image_CanNOT_Load;
     }
